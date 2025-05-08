@@ -14,7 +14,15 @@ import EventModal from '@/components/calendar/EventModal';
 const locales = {
   'en-US': enUS,
 };
-
+type ProcessedEvent = {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  type: 'event' | 'reminder';
+  color?: string;
+  description?: string;
+};
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -33,7 +41,7 @@ const CalendarComponent = () => {
     setMounted(true);
   }, []);
 
-  const eventStyleGetter = useCallback((event: CalendarEvent) => {
+  const eventStyleGetter = useCallback((event: ProcessedEvent) => {
     const backgroundColor = event.color || (event.type === 'event' ? '#2563eb' : '#dc2626');
 
     return {
